@@ -269,6 +269,7 @@ void DrowDrop(int _drop, glm::vec2 _position, double _alpha)
 	glPopMatrix();
 }
 
+
 void Display()
 {
 	glMatrixMode(GL_PROJECTION);
