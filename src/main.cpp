@@ -575,7 +575,7 @@ void Motion(int _x, int _y)
 	}
 }
 
-int main(int argc, char* argv[])
+int main2(int argc, char* argv[])
 {
 	srand((unsigned char)time(NULL));
 
