@@ -344,6 +344,7 @@ void Display()
 		}
 	}
 
+	// コンボ表示
 	for (int y = 0; y < ROW_MAX; y++) {
 		for (int x = 0; x < COLUMN_MAX; x++) {
 			if (drops[y][x].combo >= 1) {	// コンボが発生していたらコンボ表示
@@ -575,7 +576,7 @@ void Motion(int _x, int _y)
 	}
 }
 
-int main2(int argc, char* argv[])
+int main(int argc, char* argv[])
 {
 	srand((unsigned char)time(NULL));
 

@@ -1,0 +1,14 @@
+{
+    "hello":{
+        "ja": "こんにちは",
+        "en": "hello"
+    },
+    "RyosukeProject":{
+        "ja": "りょうすけProject",
+        "en": "Ryosuke Project"
+    },
+    "SelectLevel":{
+        "ja": "レベル選択画面",
+        "en": "Select Your Level"
+    }
+}
