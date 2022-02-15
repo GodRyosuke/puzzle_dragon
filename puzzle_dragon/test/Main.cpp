@@ -1,14 +1,18 @@
-#include "Game.hpp"
+#include "GameLoop.hpp"
 
 int main(int argc, char** argv)
 {
-	Game game;
-	bool success = game.Initialize();
-	if (success) {
-		game.RunLoop();
-	}
+	GameLoop game_loop;
 
-	game.Shutdown();
+	game_loop.Run();
+
+	//Game game;
+	//bool success = game.Initialize();
+	//if (success) {
+	//	game.RunLoop();
+	//}
+
+	//game.Shutdown();
 
 	return 0;
 }

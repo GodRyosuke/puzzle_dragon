@@ -1,9 +1,10 @@
 #include "Game.hpp"
 
+class Title;
 
-
-Game::Game()
-	:COLUMN_MAX(6),
+Game::Game(CommonData* const commonData)
+	:Scene(commonData), 
+	COLUMN_MAX(6),
 	ROW_MAX(5),
 	GRID_SIZE(128),
 	WINDOW_WIDTH(GRID_SIZE * COLUMN_MAX),
@@ -13,9 +14,20 @@ Game::Game()
 	phase(PHASE_IDLE),
 	frame(0),
 	combo(0),
-	color_count(0)
+	color_count(0),
+	goToTitle(false)
 {
+	if (!Initialize()) {
+		printf("error: Failed to initialize Game Scene\n");
+		exit(-1);
+	}
 
+	ERRCHECK(mBackMusicInstance->start());
+}
+
+Game::~Game()
+{
+	Shutdown();
 }
 
 bool Game::Initialize()
@@ -274,7 +286,7 @@ static bool IsInBoard(Eigen::Vector2i _position, int ROW_MAX, int COLUMN_MAX)	//
 }
 
 
-void Game::ProcessInput()
+void Game::input()
 {
 	SDL_Point mouse_position = { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 };
 	SDL_GetMouseState(&mouse_position.x, &mouse_position.y);
@@ -316,6 +328,10 @@ void Game::ProcessInput()
 	if (keyState[SDL_SCANCODE_ESCAPE] || keyState[SDL_SCANCODE_Q])	// escapeキーを押下すると終了
 	{
 		mIsRunning = false;
+	}
+	if (keyState[SDL_SCANCODE_T]) {	// t キーでタイトル移動
+		ERRCHECK(mBackMusicInstance->stop(FMOD_STUDIO_STOP_IMMEDIATE));
+		goToTitle = true;
 	}
 }
 
@@ -465,7 +481,7 @@ bool Game::EraseDrops()
 }
 
 
-void Game::UpdateGame()
+Scene* Game::update()
 {
 	frame++;
 
@@ -492,28 +508,6 @@ void Game::UpdateGame()
 			Eigen::Vector2d swipingCenter = mSwipingDropPosd * GRID_SIZE + one_vec * GRID_SIZE / 2;
 			Eigen::Vector2d newCenter = newDropd * GRID_SIZE + one_vec * GRID_SIZE / 2;
 			Eigen::Vector2d center = swipingCenter / 2 + newCenter / 2;
-
-			//glm::vec2 swipingCenter;	// 今動かしているdropの中心のピクセル座標
-			//{
-			//	glm::vec2 temp = swipingDrop;
-			//	temp.x = (temp.x + 0.5) * GRID_SIZE;
-			//	temp.y = (temp.y + 0.5) * GRID_SIZE;
-			//	swipingCenter = temp;
-			//}
-			//glm::vec2 newCenter;		// 動かす先のdropの中心のピクセル座標
-			//{
-			//	glm::vec2 temp = newDrop;
-			//	temp.x = (temp.x + 0.5) * GRID_SIZE;
-			//	temp.y = (temp.y + 0.5) * GRID_SIZE;
-			//	newCenter = temp;
-			//}
-			//glm::vec2 center;			// 回転中心のピクセル座標
-			//{
-			//	glm::vec2 temp = swipingCenter + newCenter;
-			//	temp.x /= 2;
-			//	temp.y /= 2;
-			//	center = temp;
-			//}
 
 			drops[mSwipingDropPos.y()][mSwipingDropPos.x()].center =
 				drops[newDrop.y()][newDrop.x()].center = center;
@@ -615,9 +609,18 @@ void Game::UpdateGame()
 
 
 	// Update Game
-
 	ERRCHECK(mAudioSystem->update());
 
+	if (mIsRunning == false) {
+		return NULL;
+	}
+
+	if (goToTitle) {
+		Scene* title = makeScene<Title>();
+		return title;
+	}
+
+	return this;
 }
 
 // x, yを中心にして、幅widthの正方形を描画
@@ -717,29 +720,13 @@ static void DrawText(std::string text_data, int x, int y, int* color, TTF_Font* 
 		nullptr,
 		SDL_FLIP_NONE);
 
+
 }
 
-void Game::Draw()
+void Game::draw()
 {
 	SDL_SetRenderDrawColor(mRenderer, 220, 220, 220, 255);
 	SDL_RenderClear(mRenderer);
-
-	/*DrawSquare((1 + 0.5) * GRID_SIZE, GRID_SIZE / 2, GRID_SIZE, mDropTextures[0], mRenderer);
-	DrawSquare((0.5) * GRID_SIZE, GRID_SIZE / 2, GRID_SIZE, mDropTextures[1], mRenderer);*/
-
-	//SDL_Rect rect;
-	//rect.w = WINDOW_WIDTH;
-	//rect.h = tex_height * WINDOW_WIDTH / tex_width;
-	//rect.x = 0;
-	//rect.y = 0;
-	//SDL_RenderCopyEx(mRenderer,
-	//	mTexture,
-	//	nullptr,
-	//	&rect,
-	//	0,
-	//	nullptr,
-	//	SDL_FLIP_NONE);
-
 
 	// 盤面描画
 	for (int y = 0; y < ROW_MAX; y++) {
@@ -835,21 +822,6 @@ void Game::Draw()
 				//position.y() += 0 * combo_scale / 2;
 				DrawText(combo_str, position.x(), position.y(), colors[color_count % 6],
 					mFont, mRenderer, combo_scale);
-
-				//glColor3ubv(colors[color_count % 6]);
-				//glPushMatrix();
-				//{
-				//	double s = drops[y][x].comboScale;
-				//	Eigen::Vector2i position = Eigen::Vector2i((x + 0.5) * GRID_SIZE, (y + 0.5) * GRID_SIZE);
-				//	position.x() -= (80 * strlen(str) * s) / 2;	// コンボ表示をdropの真ん中にそろえる
-				//	position.y() += 100 * s / 2;
-
-				//	glTranslated(position.x, position.y, 0);
-				//	glScaled(s, -s, 0);
-				//	glLineWidth(24 * s);
-				//	glutStrokeString(GLUT_STROKE_ROMAN, (const unsigned char*)str);
-				//}
-				//glPopMatrix();
 			}
 		}
 	}

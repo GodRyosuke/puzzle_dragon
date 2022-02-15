@@ -1,4 +1,4 @@
-
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -19,20 +19,27 @@
 #include "fmod_studio.hpp"
 #include "FMOD/common.hpp"
 
+#include "Scene.hpp"
+#include "CommonData.hpp"
+
 namespace nl = nlohmann;
 
-class Game {
+class Game : public Scene{
 public:
-	Game();
+	Game(CommonData* const commonData);
+	virtual ~Game();
+	virtual Scene* update() override;
+	virtual void draw() override;
+	virtual void input() override;
 
 	bool Initialize();
 	void RunLoop();		// GameÇÃÉÅÉCÉìÉãÅ[Év
 	void Shutdown();
 
 private:
-	void ProcessInput();
-	void UpdateGame();
-	void Draw();
+	void ProcessInput() {};
+	void UpdateGame() {};
+	void Draw() {};
 
 	bool LoadData();
 	void UnloadData();
@@ -47,6 +54,7 @@ private:
 
 
 	bool mIsRunning;
+	bool goToTitle;
 
 	const int COLUMN_MAX;
 	const int ROW_MAX;
@@ -131,3 +139,7 @@ private:
 	FMOD::Studio::EventInstance* mMoveDropSound;
 	FMOD::Studio::EventInstance* mEraseDropSound;
 };
+template<>
+Scene* Scene::makeScene<Game>() {
+	return new Game(mCommonData);
+}

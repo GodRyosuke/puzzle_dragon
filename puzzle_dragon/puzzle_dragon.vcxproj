@@ -19,14 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\CommonData.hpp" />
     <ClInclude Include="include\FMOD\common.hpp" />
     <ClInclude Include="include\FMOD\common_platform.hpp" />
     <ClInclude Include="include\Game.hpp" />
+    <ClInclude Include="include\Scene.hpp" />
+    <ClInclude Include="include\SceneManager.hpp" />
+    <ClInclude Include="include\Title.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\FMOD\common.cpp" />
     <ClCompile Include="src\FMOD\common_platform.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="include\GameLoop.hpp" />
+    <ClCompile Include="src\GameLoop.cpp" />
+    <ClCompile Include="src\SceneManager.cpp" />
+    <ClCompile Include="src\Title.cpp" />
     <ClCompile Include="test\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
