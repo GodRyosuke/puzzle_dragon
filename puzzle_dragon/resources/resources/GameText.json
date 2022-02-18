@@ -1,0 +1,22 @@
+{
+    "Test":{
+        "hello":{
+            "ja": "こんにちは",
+            "en": "hello"
+        },
+        "RyosukeProject":{
+            "ja": "りょうすけProject",
+            "en": "Ryosuke Project"
+        }
+    },
+    "Title": {
+        "SelectLevel":{
+            "ja": "レベル選択画面",
+            "en": "Select Your Level"
+        },
+        "TitleText": {
+            "ja":"エンターキーを押してゲーム開始！",
+            "en": "Press The Enter Key to Start!"
+        }
+    }
+}

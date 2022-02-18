@@ -1,0 +1,33 @@
+<include>
+$(SolutionDir)dependencies\SDL2\include
+$(SolutionDir)dependencies\fmod\include
+$(SolutionDir)dependencies\json\single_include\nlohmann
+$(SolutionDir)dependencies\eigen-3.4.0
+$(SolutionDir)puzzle_dragon\include
+
+<lib>
+$(SolutionDir)dependencies\SDL2\lib\x64
+$(SolutionDir)dependencies\fmod\lib
+
+freeglutd.lib
+fmod_vc.lib
+fmodstudio_vc.lib
+SDL2.lib
+SDL2main.lib
+SDL2_image.lib
+SDL2_ttf.lib
+
+<after build>
+XCOPY "$(SolutionDir)puzzle_dragon\resources" "$(OutDir)" /E /Y
+COPY "$(SolutionDir)dependencies\SDL2\lib\x64\SDL2.dll" "$(OutDir)"  
+COPY "$(SolutionDir)dependencies\SDL2\lib\x64\SDL2_image.dll" "$(OutDir)"  
+COPY "$(SolutionDir)dependencies\SDL2\lib\x64\libjpeg-9.dll" "$(OutDir)"  
+COPY "$(SolutionDir)dependencies\SDL2\lib\x64\libpng16-16.dll" "$(OutDir)"  
+COPY "$(SolutionDir)dependencies\SDL2\lib\x64\libtiff-5.dll" "$(OutDir)"  
+COPY "$(SolutionDir)dependencies\SDL2\lib\x64\libwebp-7.dll" "$(OutDir)"
+COPY "$(SolutionDir)dependencies\SDL2\lib\x64\zlib1.dll" "$(OutDir)"
+COPY "$(SolutionDir)dependencies\SDL2\lib\x64\SDL2_ttf.dll" "$(OutDir)"
+COPY "$(SolutionDir)dependencies\fmod\lib\fmod.dll" "$(OutDir)"
+COPY "$(SolutionDir)dependencies\fmod\lib\fmodstudio.dll" "$(OutDir)"
+
+

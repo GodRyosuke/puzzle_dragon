@@ -85,6 +85,7 @@ static void DrawText(std::string text_data, int x, int y, int* color, TTF_Font* 
 		SDL_FLIP_NONE);
 }
 
+
 bool Title::LoadData()
 {
 	// ƒ^ƒCƒgƒ‹‚Ì”wŒi‰æ‘œ“Ç‚İ‚İ
@@ -97,6 +98,7 @@ bool Title::LoadData()
 			SDL_Log("Failed to load texture file %s", filePath.c_str());
 			return false;
 		}
+
 
 		// Create texture from surface
 		tex = SDL_CreateTextureFromSurface(mCommonData->mRenderer, surf);

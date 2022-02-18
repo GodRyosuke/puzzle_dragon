@@ -8,8 +8,8 @@
 #include <map>
 #include <utility>
 #include <time.h>
-#include "GL/freeglut.h"
-#include "glm/glm.hpp"
+// #include "GL/freeglut.h"
+// #include "glm/glm.hpp"
 #include <Eigen/Dense>
 #include "SDL.h"
 #include "SDL_image.h"

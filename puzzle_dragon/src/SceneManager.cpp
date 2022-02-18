@@ -13,7 +13,6 @@ SceneManager::SceneManager()
 }
 
 
-
 SceneManager::~SceneManager() {
     delete mScene;
     delete mCommonData;
@@ -93,10 +92,16 @@ bool SceneManager::LoadData()
 		if (ifs.good()) {
 			ifs >> mCommonData->mTextData;
 		}
+		else {
+			printf("error: failed to load text lang data\n");
+			return false;
+		}
 	}
+
 
 	// デフォルトは英語
 	mCommonData->mLangType = mCommonData->ENGLISH;
+
 
 	// Load Master Bank
 	FMOD::Studio::Bank* masterBank = NULL;
@@ -121,6 +126,7 @@ bool SceneManager::SceneManagerUpdate() {
 
     return true;
 }
+
 
 
 void SceneManager::draw() {
