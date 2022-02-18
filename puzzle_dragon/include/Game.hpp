@@ -31,10 +31,11 @@ public:
 	virtual Scene* update() override;
 	virtual void draw() override;
 	virtual void input() override;
+	virtual void shutdown() override;
 
 	bool Initialize();
-	void RunLoop();		// Game‚ÌƒƒCƒ“ƒ‹[ƒv
-	void Shutdown();
+	void RunLoop();		// Gameã®ãƒ¡ã‚¤ãƒ³ãƒ«ãƒ¼ãƒ—
+	void Shutdown() {}
 
 private:
 	void ProcessInput() {};
@@ -49,8 +50,8 @@ private:
 	bool EraseDrops();
 	bool FallDrops();
 
-	SDL_Window* mWindow;
-	SDL_Renderer* mRenderer;
+	// SDL_Window* mWindow;
+	// SDL_Renderer* mRenderer;
 
 
 	bool mIsRunning;
@@ -61,14 +62,14 @@ private:
 	
 	const int GRID_SIZE;
 	
-	const int WINDOW_WIDTH;
-	const int WINDOW_HEIGHT;
+	// const int WINDOW_WIDTH;
+	// const int WINDOW_HEIGHT;
 	
 	const double COMBO_SCALE_MAX;
 	const double COMBO_SCALE_MIN;
 
 
-	// ƒpƒYƒ‹‚ÌF
+	// ãƒ‘ã‚ºãƒ«ã®è‰²
 	enum {
 		DROP_NONE = -1,
 		DROP_RED,
@@ -80,7 +81,7 @@ private:
 		DROP_MAX
 	};
 
-	// ƒQ[ƒ€‚Ìisó‘Ô
+	// ã‚²ãƒ¼ãƒ ã®é€²è¡ŒçŠ¶æ…‹
 	enum {
 		PHASE_IDLE,
 		PHASE_SWIPE,
@@ -99,11 +100,11 @@ private:
 
 	typedef struct {
 		int drop;
-		Eigen::Vector2d center;	// ‰ñ“]’†S
-		double rotate;		// Œ»İ‚Ì‰ñ“]—Ê
-		double rotateMax;	// Å‘å‚Ì‰ñ“]—Ê
-		int eraseAlpha;	// íœ‚·‚é‚Æ‚«‚Ì•s“§–¾“x
-		double fallY;		// —‰º’†‚ÌyÀ•W
+		Eigen::Vector2d center;	// å›è»¢ä¸­å¿ƒ
+		double rotate;		// ç¾åœ¨ã®å›è»¢é‡
+		double rotateMax;	// æœ€å¤§ã®å›è»¢é‡
+		int eraseAlpha;	// å‰Šé™¤ã™ã‚‹ã¨ãã®ä¸é€æ˜åº¦
+		double fallY;		// è½ä¸‹ä¸­ã®yåº§æ¨™
 		int combo;
 		double comboScale;
 	}DROP;
@@ -122,8 +123,8 @@ private:
 		{1, 0},			//DIRECTION_RIGHT,
 	};
 
-	int combo;	// Œ»İ‚ÌƒRƒ“ƒ{”
-	unsigned int frame;	// ‚Ç”hè‚ÈƒRƒ“ƒ{•\¦—p
+	int combo;	// ç¾åœ¨ã®ã‚³ãƒ³ãƒœæ•°
+	unsigned int frame;	// ã©æ´¾æ‰‹ãªã‚³ãƒ³ãƒœè¡¨ç¤ºç”¨
 	unsigned int color_count;
 
 	std::vector<SDL_Texture*> mDropTextures;
@@ -133,8 +134,8 @@ private:
 	Eigen::Vector2i mMousePos;
 	Eigen::Vector2i mSwipingDropPos;
 
-	TTF_Font* mFont;
-	FMOD::Studio::System* mAudioSystem;
+	// TTF_Font* mFont;
+	// FMOD::Studio::System* mAudioSystem;
 	FMOD::Studio::EventInstance* mBackMusicInstance;
 	FMOD::Studio::EventInstance* mMoveDropSound;
 	FMOD::Studio::EventInstance* mEraseDropSound;

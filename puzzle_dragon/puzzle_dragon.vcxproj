@@ -33,7 +33,9 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="include\GameLoop.hpp" />
     <ClCompile Include="src\GameLoop.cpp" />
-    <ClCompile Include="src\SceneManager.cpp" />
+    <ClCompile Include="src\SceneManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="src\Title.cpp" />
     <ClCompile Include="test\Main.cpp" />
   </ItemGroup>

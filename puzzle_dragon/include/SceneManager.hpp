@@ -13,10 +13,15 @@ private:
     //CommonData* const mCommonData;
 
 public:
-    void SceneManagerUpdate();
+    bool Initialize();
+    bool LoadData(); 
+
+    bool SceneManagerUpdate();
+    void draw();
+    void input();
+    void shutdown();
+
     Scene* update() override {
         return mScene;
     };
-    void draw();
-    void input();
 };
