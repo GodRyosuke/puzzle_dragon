@@ -25,6 +25,7 @@ Title::Title(CommonData* const commonData)
 	ERRCHECK(mBackMusic->start());
 }
 
+
 Title::~Title()
 {
 	UnloadData();
