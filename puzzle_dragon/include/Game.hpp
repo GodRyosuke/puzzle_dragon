@@ -131,6 +131,10 @@ private:
 	std::map<std::string, SDL_Texture*>mFieldTextures;
 	nl::json mTextData;
 
+	bool mIsSwipingMusicStart;
+	int mSMsingCallCount;
+
+	Eigen::Vector2i mLastMousePos;
 	Eigen::Vector2i mMousePos;
 	Eigen::Vector2i mSwipingDropPos;
 

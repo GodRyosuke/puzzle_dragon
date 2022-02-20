@@ -29,7 +29,7 @@ bool SceneManager::Initialize()
 		return false;
 	}
 
-	mCommonData->mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 3)", 100, 100, mCommonData->WINDOW_WIDTH, mCommonData->WINDOW_HEIGHT, 0);
+	mCommonData->mWindow = SDL_CreateWindow("Puzzle and Dragons ??", 100, 100, mCommonData->WINDOW_WIDTH, mCommonData->WINDOW_HEIGHT, 0);
 	if (!mCommonData->mWindow)
 	{
 		SDL_Log("Failed to create window: %s", SDL_GetError());

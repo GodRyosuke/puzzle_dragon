@@ -4,6 +4,7 @@ $(SolutionDir)dependencies\fmod\include
 $(SolutionDir)dependencies\json\single_include\nlohmann
 $(SolutionDir)dependencies\eigen-3.4.0
 $(SolutionDir)puzzle_dragon\include
+$(SolutionDir)wander_opengl\include
 
 <lib>
 $(SolutionDir)dependencies\SDL2\lib\x64

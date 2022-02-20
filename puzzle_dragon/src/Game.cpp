@@ -17,7 +17,9 @@ Game::Game(CommonData* const commonData)
 	frame(0),
 	combo(0),
 	color_count(0),
-	goToTitle(false)
+	goToTitle(false),
+	mIsSwipingMusicStart(false),
+	mSMsingCallCount(0)
 {
 	if (!Initialize()) {
 		printf("error: Failed to initialize Game Scene\n");
@@ -101,6 +103,10 @@ bool Game::Initialize()
 			drops[y][x].eraseAlpha = 0;
 			drops[y][x].fallY = 0;
 			drops[y][x].combo = 0;
+			drops[y][x].comboScale = 0;
+			drops[y][x].center = Eigen::Vector2d::Zero();
+			drops[y][x].rotate = 0;
+			drops[y][x].rotateMax = 0;
 		}
 	}
 
@@ -308,15 +314,16 @@ void Game::input()
 			break;
 		case SDL_MOUSEBUTTONDOWN:	// マウスのボタンが押されたら
 		{
-			mSwipingDropPos = mMousePos / GRID_SIZE;
-			ERRCHECK(mMoveDropSound->start());	// swipe中に流す音楽
-			phase = PHASE_SWIPE;
+			if (phase == PHASE_IDLE) {
+				mLastMousePos = mMousePos;
+				mSwipingDropPos = mMousePos / GRID_SIZE;
+				phase = PHASE_SWIPE;
+			}
 		}
 			break;
 		case SDL_MOUSEBUTTONUP:		// マウスを離したら
 			if (phase == PHASE_SWIPE) {
 				combo = 0;
-				ERRCHECK(mMoveDropSound->stop(FMOD_STUDIO_STOP_IMMEDIATE));
 
 				if (EraseDrops()) {
 					phase = PHASE_ERASE;
@@ -489,6 +496,36 @@ bool Game::EraseDrops()
 Scene* Game::update()
 {
 	frame++;
+
+	if (phase == PHASE_SWIPE) {
+		if (mMousePos != mLastMousePos) {
+			if (mIsSwipingMusicStart == false) {
+				mIsSwipingMusicStart = true;
+				ERRCHECK(mMoveDropSound->start());	// swipe中に流す音楽
+			}
+			mSMsingCallCount = 0;
+		}
+		mLastMousePos = mMousePos;
+	}
+	mSMsingCallCount++;
+	if (mSMsingCallCount > 20) {		// 20フレーム動かなかったらswiping dropの音楽停止
+		mIsSwipingMusicStart = false;
+		ERRCHECK(mMoveDropSound->stop(FMOD_STUDIO_STOP_IMMEDIATE));
+	}
+
+	//if (phase!= PHASE_SWIPE) {		// 初回クリック 
+	//	mLastMousePos = mMousePos;
+	//}
+	//else {							// ドラッグ中
+	//	if (mMousePos != mLastMousePos) {
+	//		ERRCHECK(mMoveDropSound->start());	// swipe中に流す音楽
+	//		printf("called\n");
+	//	}
+	//	else {
+	//		ERRCHECK(mMoveDropSound->stop(FMOD_STUDIO_STOP_IMMEDIATE));
+	//	}
+	//	mLastMousePos = mMousePos;
+	//}
 
 	if (phase == PHASE_SWIPE) {
 		// 現在のmouseの位置からテーブルのどこにいるのかを算出
@@ -838,7 +875,7 @@ void Game::draw()
 		"PHASE_FALL",
 		"PHASE_MAX"
 	};
-	//DrawText(phaseName[phase], GRID_SIZE * 1.5, GRID_SIZE * 0.5, color, mFont, mRenderer, 0.4);
+	//DrawText(phaseName[phase], GRID_SIZE * 1.5, GRID_SIZE * 0.5, color, mCommonData->mFont, mCommonData->mRenderer, 0.4);
 
 
 
