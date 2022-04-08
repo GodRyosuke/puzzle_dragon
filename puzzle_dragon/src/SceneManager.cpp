@@ -141,5 +141,4 @@ void SceneManager::input()
 void SceneManager::shutdown()
 {
     mScene->shutdown();
-    delete mScene;
 }

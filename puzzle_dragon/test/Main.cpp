@@ -19,6 +19,7 @@ int main(int argc, char** argv)
 	}
 
 	scene_manager->shutdown();
+	delete scene_manager;
 
 
 	//GameLoop game_loop;
