@@ -14,12 +14,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\FMOD\common.cpp" />
     <ClCompile Include="src\FMOD\common_platform.cpp" />
-    <ClCompile Include="include\GameLoop.hpp" />
     <ClCompile Include="src\SceneManager.cpp" />
-    <ClCompile Include="src\GameLoop.cpp" />
     <ClCompile Include="src\Title.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\..\..\Pictures\Screenshots\スクリーンショット (9).png" />
   </ItemGroup>
 </Project>

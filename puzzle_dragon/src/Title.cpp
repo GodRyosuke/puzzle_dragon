@@ -50,12 +50,6 @@ static void DrawText(std::string text_data, int x, int y, int* color, TTF_Font* 
 	color_data.b = color[2];
 	color_data.a = (Uint8)color[3];
 
-	//j["intrinsics"]["cx"]
-	//auto t = mTextData["hello"]["ja"].value();
-	//std::stringstream ss;
-	//ss << mTextData["hello"]["ja"];
-	//SDL_Surface* font_surface = TTF_RenderUTF8_Blended(font, ss.str().c_str(), blue);
-
 
 	SDL_Surface* font_surface = TTF_RenderUTF8_Blended(font, text_data.c_str(), color_data);
 

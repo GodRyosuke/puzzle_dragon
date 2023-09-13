@@ -8,8 +8,6 @@
 #include <map>
 #include <utility>
 #include <time.h>
-// #include "GL/freeglut.h"
-// #include "glm/glm.hpp"
 #include <Eigen/Dense>
 #include "SDL.h"
 #include "SDL_image.h"
@@ -50,9 +48,6 @@ private:
 	bool EraseDrops();
 	bool FallDrops();
 
-	// SDL_Window* mWindow;
-	// SDL_Renderer* mRenderer;
-
 
 	bool mIsRunning;
 	bool goToTitle;
@@ -61,9 +56,6 @@ private:
 	const int ROW_MAX;
 	
 	const int GRID_SIZE;
-	
-	// const int WINDOW_WIDTH;
-	// const int WINDOW_HEIGHT;
 	
 	const double COMBO_SCALE_MAX;
 	const double COMBO_SCALE_MIN;

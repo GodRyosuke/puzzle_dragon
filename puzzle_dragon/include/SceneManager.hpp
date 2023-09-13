@@ -5,12 +5,9 @@
 class SceneManager : public Scene {
 public:
     SceneManager();
-    //SceneManager(const SceneManager&) = delete;
-    //SceneManager& operator=(const SceneManager&) = delete;
     ~SceneManager();
 private:
     Scene* mScene;
-    //CommonData* const mCommonData;
 
 public:
     bool Initialize();

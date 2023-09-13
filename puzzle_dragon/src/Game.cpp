@@ -1,5 +1,3 @@
-//#pragma once
-
 #include "Game.hpp"
 
 class Title;
@@ -9,8 +7,6 @@ Game::Game(CommonData* const commonData)
 	COLUMN_MAX(6),
 	ROW_MAX(5),
 	GRID_SIZE(128),
-	// WINDOW_WIDTH(GRID_SIZE * COLUMN_MAX),
-	// WINDOW_HEIGHT(GRID_SIZE * ROW_MAX),
 	COMBO_SCALE_MAX(2.0),
 	COMBO_SCALE_MIN(0.2),
 	phase(PHASE_IDLE),
@@ -32,57 +28,10 @@ Game::Game(CommonData* const commonData)
 Game::~Game()
 {
 	UnloadData();
-	// Shutdown();
 }
 
 bool Game::Initialize()
 {
-	// if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
-	// {
-	// 	SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
-	// 	return false;
-	// }
-
-	// mWindow = SDL_CreateWindow("Game Programming in C++ (Chapter 3)", 100, 100, WINDOW_WIDTH, WINDOW_HEIGHT, 0);
-	// if (!mWindow)
-	// {
-	// 	SDL_Log("Failed to create window: %s", SDL_GetError());
-	// 	return false;
-	// }
-
-	// mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	// if (!mRenderer)
-	// {
-	// 	SDL_Log("Failed to create renderer: %s", SDL_GetError());
-	// 	return false;
-	// }
-
-	// int flags = IMG_INIT_JPG | IMG_INIT_PNG;
-	// int initted = IMG_Init(flags);
-	// if ((initted & flags) != flags) {
-	// 	printf("IMG_Init: Failed to init required jpg and png support!\n");
-	// 	std::string error = IMG_GetError();
-	// 	SDL_Log("IMG_Init: %s\n", IMG_GetError());
-
-	// }
-
-	// TTF_Init();
-
-	// サウンド関連
-	// void* extraDriverData = NULL;
-	// Common_Init(&extraDriverData);
-
-	// mCommonData->mAudioSystem = NULL;
-	// ERRCHECK(FMOD::Studio::System::create(&mCommonData->mAudioSystem));
-
-	// // The example Studio project is authored for 5.1 sound, so set up the system output mode to match
-	// FMOD::System* coreSystem = NULL;
-	// ERRCHECK(mCommonData->mAudioSystem->getCoreSystem(&coreSystem));
-	// ERRCHECK(coreSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_5POINT1, 0));
-
-	// ERRCHECK(mCommonData->mAudioSystem->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, extraDriverData));
-
-
 	mIsRunning = true;
 
 	if (!LoadData()) {
@@ -122,7 +71,6 @@ bool Game::LoadData()
 	mDropTextures.resize(DROP_MAX);
 	for (int i = 0; i < DROP_MAX; i++) {
 		SDL_Texture* tex = nullptr;
-		//std::string fileName = "C:\\Users\\kusumoto\\source\\repos\\puzzle_dragon\\puzzle_dragon\\resources\\test_picture.png";
 
 		std::string filePath = ".\\resources\\";
 		std::string fileName = "";
@@ -218,35 +166,8 @@ bool Game::LoadData()
 		mFieldTextures.insert(std::make_pair("brown", tex));
 	}
 
-	// Font読み込み
-	// mFont = TTF_OpenFont(".\\resources\\VL-Gothic-Regular.ttf", 128);
-
-
-	// // 日本語テキストデータ読み込み
-	// {
-	// 	std::string filePath = ".\\resources\\GameText.json";
-	// 	std::ifstream ifs(filePath.c_str());
-	// 	if (ifs.good())
-	// 	{
-	// 		ifs >> mTextData;
-	// 		/*for (const auto& elem : mTextData.items())
-	// 		{
-	// 			std::cout << elem.value() << std::endl;
-	// 		}*/
-	// 		//std::cout << j["project name"] << std::endl;
-	// 		//std::cout << j["intrinsics"]["cx"] << std::endl;
-	// 	}
-	// }
-
 
 	// Audio Data読み出し
-	// Load Bank
-	// FMOD::Studio::Bank* masterBank = NULL;
-	// ERRCHECK(mCommonData->mAudioSystem->loadBankFile(Common_MediaPath(".\\resources\\Master.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank));
-
-	// FMOD::Studio::Bank* stringsBank = NULL;
-	// ERRCHECK(mCommonData->mAudioSystem->loadBankFile(Common_MediaPath(".\\resources\\Master.strings.bank"), FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank));
-
 	// Load Back Music
 	FMOD::Studio::EventDescription* BackMusicDesc = NULL;
 	ERRCHECK(mCommonData->mAudioSystem->getEvent("event:/Game/back_bgm", &BackMusicDesc));
@@ -513,19 +434,6 @@ Scene* Game::update()
 		ERRCHECK(mMoveDropSound->stop(FMOD_STUDIO_STOP_IMMEDIATE));
 	}
 
-	//if (phase!= PHASE_SWIPE) {		// 初回クリック 
-	//	mLastMousePos = mMousePos;
-	//}
-	//else {							// ドラッグ中
-	//	if (mMousePos != mLastMousePos) {
-	//		ERRCHECK(mMoveDropSound->start());	// swipe中に流す音楽
-	//		printf("called\n");
-	//	}
-	//	else {
-	//		ERRCHECK(mMoveDropSound->stop(FMOD_STUDIO_STOP_IMMEDIATE));
-	//	}
-	//	mLastMousePos = mMousePos;
-	//}
 
 	if (phase == PHASE_SWIPE) {
 		// 現在のmouseの位置からテーブルのどこにいるのかを算出
@@ -728,12 +636,6 @@ static void DrawText(std::string text_data, int x, int y, int* color, TTF_Font* 
 	color_data.b = color[2];
 	color_data.a = (Uint8)color[3];
 	
-	//j["intrinsics"]["cx"]
-	//auto t = mTextData["hello"]["ja"].value();
-	//std::stringstream ss;
-	//ss << mTextData["hello"]["ja"];
-	//SDL_Surface* font_surface = TTF_RenderUTF8_Blended(font, ss.str().c_str(), blue);
-
 
 	SDL_Surface* font_surface = TTF_RenderUTF8_Blended(font, text_data.c_str(), color_data);
 
@@ -801,12 +703,6 @@ void Game::draw()
 			}
 
 			// Drop描画
-	/*		Eigen::Vector2i piecePos;
-			piecePos.x() = (x + 0.5) * GRID_SIZE;
-			piecePos.y() = (y + 0.5) * GRID_SIZE;*/
-			//DrawDrop(drops[y][x].drop, piecePos, alpha);
-			//DrawSquare(piecePos.x(), piecePos.y(), GRID_SIZE, 
-			//	mDropTextures[drops[y][x].drop], mRenderer, alpha);
 			DrawDrop(drops[y][x].drop, position, alpha);
 		}
 	}
@@ -827,15 +723,12 @@ void Game::draw()
 				(GRID_SIZE / 2.0) * sin(drops[y][x].rotate));
 
 			DrawDrop(drops[y][x].drop, (int)position.x(), (int)position.y(), alpha);
-			//DrawSquare(position.x(), position.y(), GRID_SIZE, mDropTextures[drops[y][x].drop], mRenderer, alpha);
 		}
 	}
 
 	// swipe中のdrop描画
 	if (phase == PHASE_SWIPE) {
 		DrawDrop(drops[mSwipingDropPos.y()][mSwipingDropPos.x()].drop, mMousePos);
-		//DrawSquare(mMousePos.x(), mMousePos.y(), GRID_SIZE,
-		//	mDropTextures[drops[mSwipingDropPos.y()][mSwipingDropPos.x()].drop], mRenderer);
 	}
 
 	// ド派手なコンボ表示

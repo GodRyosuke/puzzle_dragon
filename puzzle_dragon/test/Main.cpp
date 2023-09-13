@@ -1,4 +1,3 @@
-//#include "GameLoop.hpp"
 #include <iostream>
 #include "SceneManager.hpp"
 
@@ -21,19 +20,6 @@ int main(int argc, char** argv)
 	scene_manager->shutdown();
 	delete scene_manager;
 
-
-	//GameLoop game_loop;
-
-	//game_loop.Run();
-
-
-	//Game game;
-	//bool success = game.Initialize();
-	//if (success) {
-	//	game.RunLoop();
-	//}
-
-	//game.Shutdown();
 
 	return 0;
 }
